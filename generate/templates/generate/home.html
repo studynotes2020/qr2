@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load qr_code %}
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>QR Code Generator</title>
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+  <div class="container shadow"
+       style="width: 800px; margin-top: 5em; padding: 2em">
+    <form method="post">
+      {% csrf_token %}
+      <h3>Enter any text to generate a QR code</h3>
+      <div class="input-group mb-3">
+        <span class="input-group-text"
+              id="inputGroup-sizing-default">QR Code Text:</span>
+        <input type="text"
+               class="form-control"
+               aria-describedby="inputGroup-sizing-default"
+               name="qr_text"
+               autofocus>
+      </div>
+      <div class="input-group mb-3">
+        <input type="submit" style="max-width: 200px; margin: auto" class="form-control">
+      </div>
+    </form>
+    <div class="input-group mb-3">
+      <div style="margin: auto">
+        {{ post_input|safe }}
+        {% qr_from_data post_input %}
+      </div>
+    </div>
+  </div>
+
+
+
+
+</body>
+</html>

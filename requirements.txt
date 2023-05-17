@@ -1,0 +1,12 @@
+asgiref==3.6.0
+crispy-bootstrap5==0.7
+Django==4.2.1
+django-crispy-forms==2.0
+django-datetimepicker==3.14
+django-tempus-dominus==5.1.2.17
+pydantic==1.10.7
+pypng==0.20220715.0
+pytz==2023.3
+segno==1.5.2
+sqlparse==0.4.4
+typing-extensions==4.5.0

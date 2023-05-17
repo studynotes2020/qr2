@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load qr_code %}
+{% block content %}
+<div class="post-entry">
+  <p>{{ object.name }} &middot {{ object.car_plate }} &middot {{ object.visit_at }}</p>
+  <p>{% qr_from_data object.hashed %}</p>
+</div>
+
+<p><a href="{% url 'visit:visit_edit' object.pk %}">+ Edit Visit</a></p>
+<p><a href="{% url 'visit:visit_delete' object.pk %}">- Delete Visit</a></p>
+
+{% endblock content %}

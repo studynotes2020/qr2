@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load qr_code %}
+
+{% block content %}
+
+{% for object in object_list %}
+  <div class="post-entry">
+    <h2><a href="{% url 'visit:visit_detail' object.pk %}">{{ object.hashed }}</a></h2>
+    <p>{% qr_from_data object.hashed %}</p>
+  </div>
+{% endfor %}
+{% endblock content %}
