@@ -16,11 +16,9 @@
       <div class="input-group mb-3">
         <span class="input-group-text"
               id="inputGroup-sizing-default">QR Code Text:</span>
-        <input type="text"
-               class="form-control"
-               aria-describedby="inputGroup-sizing-default"
-               name="qr_text"
-               autofocus>
+        <input type="text" class="form-control" aria-describedby="inputGroup-sizing-default" name="name" autofocus>
+        <input type="text" class="form-control" aria-describedby="inputGroup-sizing-default" name="car_plate">
+        <input type="date" class="form-control" name="visit_at" value="2023-05-01">
       </div>
       <div class="input-group mb-3">
         <input type="submit" style="max-width: 200px; margin: auto" class="form-control">
@@ -30,12 +28,10 @@
       <div style="margin: auto">
         {{ post_input|safe }}
         {% qr_from_data post_input %}
+        {% qr_from_text post_input size="S" error_correction="M" image_format="png" %}
       </div>
     </div>
   </div>
-
-
-
 
 </body>
 </html>

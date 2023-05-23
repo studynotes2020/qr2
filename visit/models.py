@@ -21,3 +21,6 @@ class Visit(models.Model):
 
     def get_absolute_url(self):
         return reverse("visit:visit_detail", kwargs={"pk": self.pk})
+
+    class Meta:
+        ordering = ["-id"]

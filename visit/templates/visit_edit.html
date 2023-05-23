@@ -8,4 +8,7 @@
     <input type="submit" value="Update">
   </form>
   <p>{% qr_from_data object.hashed %}</p>
+
+<p><a href="{% url 'visit:visit_delete' object.pk %}">- Delete Visit</a></p>
+
 {% endblock content %}

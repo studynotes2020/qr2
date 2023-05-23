@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.views.generic import RedirectView
 from sse_app import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path("", RedirectView.as_view(url="qr-code-demo/", permanent=True)),
@@ -27,3 +28,9 @@ urlpatterns = [
     path("generate/", include("generate.urls", namespace="generate")),
     path('stream/', views.stream, name='stream')
 ]
+
+import debug_toolbar
+urlpatterns = [
+    path('__debug__/', include(debug_toolbar.urls)),
+] + urlpatterns
+

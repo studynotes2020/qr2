@@ -9,14 +9,14 @@ class VisitForm(forms.ModelForm):
         model = Visit
         fields = ["name", "car_plate", "visit_at"]
         widgets = {
-            # "visit_at": forms.DateInput(attrs={
-            #     "type": "date",
-            #     "value": str(date.today()),
-            #     "min": str(date.today()),
-            # })
-            "visit_at": forms.DateInput,
+            "visit_at": forms.DateInput(attrs={
+                "type": "date",
+                "value": str(date.today()),
+                "min": str(date.today()),
+            })
+            # "visit_at": forms.DateInput,
         }
         help_texts = {
             "car_plate": "Ex: PFQ5217",
-            "visit_at": "Format: mm/dd/yyyy",
+            "visit_at": "Format: dd/mm/yyyy",
         }

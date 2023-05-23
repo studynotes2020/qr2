@@ -37,14 +37,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Third-party
     'qr_code_demo',
     'qr_code',
     'visit',
     'crispy_forms',
     'crispy_bootstrap5',
     'tempus_dominus',
+    'debug_toolbar',
+
+    # Local
     'generate',
     'sse_app',
+    'panic',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'qr2.urls'
@@ -132,3 +139,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 TEMPUS_DOMINUS_LOCALIZE = True
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]

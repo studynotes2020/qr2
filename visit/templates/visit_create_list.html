@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load qr_code %}
+
+{% block content %}
+  </form>
+  <h1>New Visit</h1>
+  <form action="" method="post" >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Generate QR">
+  </form>
+  {{ visits.first.hashed }}
+  {% qr_from_text visits.first.hashed size="T" error_correction="M" image_format="png" %}
+
+  <h1>List Visit</h1>
+  {% for object in visits %}
+    <div class="post-entry">
+      <h2 ><a href="{% url 'visit:visit_edit' object.pk %}">{{ object.hashed }}</a></h2>
+    </div>
+  {% endfor %}
+
+
+
+{% endblock content %}
+
+
+{% block javascript %}
+
+{% endblock javascript %}
