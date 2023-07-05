@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third-party
-    'qr_code_demo',
+    # 'qr_code_demo',
     'qr_code',
     'visit',
     'crispy_forms',
@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'generate',
     'sse_app',
     'panic',
+    'accounts',
+    'news',
 ]
 
 MIDDLEWARE = [
@@ -132,8 +134,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATIC_URL = '/static/'
+# STATIC_ROOT = [os.path.join(BASE_DIR, 'static/')]
+
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
@@ -143,3 +149,6 @@ TEMPUS_DOMINUS_LOCALIZE = True
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+AUTH_USER_MODEL = 'accounts.User'
+# LOGIN_REDIRECT_URL = "/"

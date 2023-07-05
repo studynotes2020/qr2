@@ -8,7 +8,8 @@ class Visit(models.Model):
     name = models.CharField(max_length=100)
     car_plate = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
-    visit_at = models.DateField("Visit at")
+    visit_at = models.DateTimeField("Visit at")
+    leave_at = models.DateTimeField("Leave at", null=True)
     hashed = models.CharField(max_length=64, blank=True)
 
     def __str__(self):

@@ -4,17 +4,15 @@ from .models import Visit
 from django.urls import reverse_lazy
 from django import forms
 from .forms import VisitForm
-from django.shortcuts import render
-from django.views.generic.edit import BaseCreateView, TemplateResponseMixin
-from django.views.generic.list import BaseListView
-from django.template import RequestContext
+from django.shortcuts import render, redirect, reverse
 from django.views.generic import View
+from django.http import HttpResponseRedirect
 
 
 class FormAndListView(View):
     model = Visit
     form_class = VisitForm
-    template_name = 'visit_create_list.html'
+    template_name = 'home.html'
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
@@ -22,18 +20,19 @@ class FormAndListView(View):
         return render(self.request, self.template_name, {"form": form, "visits": visits,})
 
     def post(self, request, *args, **kwargs):
-        if self.request.method == "POST":
-            form = self.form_class(self.request.POST)
-            if form.is_valid():
-                form.save()
-                form = VisitForm  # clear the form
-                visits = Visit.objects.all()[:5]  # only return 5 objects
-                return render(request, self.template_name, {"form": form, "visits": visits,})
+        form = self.form_class(self.request.POST)
+        visits = Visit.objects.all()[:5]
+        if form.is_valid():
+            form.save()
+            # return redirect('visit:home')
+            return HttpResponseRedirect(reverse_lazy('visit:home'))
+
+        return render(self.request, self.template_name, {"form": form, "visits": visits,})
 
 
 class VisitListView(ListView):
     model = Visit
-    template_name = "home.html"
+    template_name = "visit_list.html"
 
 
 class VisitDetailView(DetailView):
@@ -59,5 +58,5 @@ class VisitUpdateView(UpdateView):
 class VisitDeleteView(DeleteView):
     model = Visit
     template_name = "visit_delete.html"
-    success_url = reverse_lazy("visit:visit_create_list")
+    success_url = reverse_lazy("visit:home")
 

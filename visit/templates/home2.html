@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load qr_code %}
+{% load static %}
+
+{% block style %}
+  <script src="{% url 'visit:js-catlog' %}"></script>
+  <script src="{% static '/admin/js/core.js' %}"></script>
+  <link rel = "stylesheet" href="{% static 'admin/css/base.css' %}">
+  <link rel = "stylesheet" href="{% static 'admin/css/widgets.css' %}">
+{% endblock style %}
+
+{% block content %}
+<div class="container-fluid">
+    <form id="visit-form" method="post">
+      <div class="row">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <div class = "col text-center">
+          <input type="submit" class="btn btn-primary" value="Generate QR" />
+        </div>
+      </div>
+    </form>
+</div>
+
+{{ visits.first.hashed }}
+{% qr_from_text visits.first.hashed size="T" error_correction="M" image_format="png" %}
+
+
+<hr />
+
+<div class="container-fluid">
+    <table class="table table-striped table-sm" id="my_visits">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Car Plate</th>
+                <th>Visit at</th>
+                <th>Leave at</th>
+                <th>Created at</th>
+                <th>Hashed</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for visit in visits %}
+        <tr>
+            <td>{{visit.name}}</td>
+            <td>{{visit.car_plate}}</td>
+            <td>{{visit.visit_at}}</td>
+            <td>{{visit.leave_at}}</td>
+            <td>{{visit.created_at}}</td>
+            <td>{{visit.hashed}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock content %}
+

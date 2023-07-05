@@ -1,14 +1,65 @@
 {% extends "base.html" %}
 {% load qr_code %}
+{% load static %}
+
+{% block style %}
+  <script src="{% url 'visit:js-catlog' %}"></script>
+  <script src="{% static '/admin/js/core.js' %}"></script>
+  <link rel = "stylesheet" href="{% static 'admin/css/base.css' %}">
+  <link rel = "stylesheet" href="{% static 'admin/css/widgets.css' %}">
+{% endblock style %}
 
 {% block content %}
+  <h1>New Visit</h1>
+  <form action="" method="post" id="visit-form">
+    <div class="row">
+      {% csrf_token %}
+      {{ form.media }}
+      {{ form.as_p }}
 
-{% for object in object_list %}
-  <div class="post-entry">
-    <h2><a href="{% url 'visit:visit_detail' object.pk %}">{{ object.hashed }}</a></h2>
-<!--    <p>{% qr_from_data object.hashed %}</p>-->
-    {% qr_from_text object.hashed size="S" error_correction="M" image_format="png" %}
-  </div>
+      <div class = "col text-center">
+        <input type="submit" value="Generate QR" />
+      </div>
+    </div>
+  </form>
 
-{% endfor %}
+  {{ visits.first.hashed }}
+  {% qr_from_text visits.first.hashed size="T" error_correction="M" image_format="png" %}
+
+<!--  <h1>List Visit</h1>-->
+<!--  {% for object in visits %}-->
+<!--    <div class="post-entry">-->
+<!--      <h2 ><a href="{% url 'visit:visit_edit' object.pk %}">{{ object.hashed }}</a></h2>-->
+<!--    </div>-->
+<!--  {% endfor %}-->
+
+<hr />
+
+<div class="container-fluid">
+  <table class="table table-striped table-sm" id="my_visits">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Car Plate</th>
+        <th>Visit at</th>
+        <th>Leave at</th>
+        <th>Created at</th>
+        <th>Hashed</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for visit in visits %}
+        <tr>
+          <td>{{visit.name}}</td>
+          <td>{{visit.car_plate}}</td>
+          <td>{{visit.visit_at}}</td>
+          <td>{{visit.leave_at}}</td>
+          <td>{{visit.created_at}}</td>
+          <td>{{visit.hashed}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
 {% endblock content %}

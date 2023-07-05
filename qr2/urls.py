@@ -14,23 +14,43 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+# from . import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
-from sse_app import views
+import accounts.views
+import accounts.forms
+from django.contrib.auth import views as auth_views
+
+import sse_app.views
+from django.conf import settings
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('guard-admin/', admin.guard_admin.urls),
+    # path('resident-admin/', admin.resident_admin.urls),
+    path('signup/', accounts.views.SignupView.as_view(), name="signup"),
+    path(
+        "login/",
+        auth_views.LoginView.as_view(
+            template_name="login.html",
+            form_class=accounts.forms.AuthenticationForm,
+        ),
+        name="login",
+    ),
+
     # path("", RedirectView.as_view(url="qr-code-demo/", permanent=True)),
-    path("qr-code-demo/", include("qr_code_demo.urls", namespace="qr_code_demo")),
-    path("qr-code/", include("qr_code.urls", namespace="qr_code")),
+    # path("qr-code-demo/", include("qr_code_demo.urls", namespace="qr_code_demo")),
+    # path("qr-code/", include("qr_code.urls", namespace="qr_code")),
+
     path("visit/", include("visit.urls", namespace="visit")),
     path("generate/", include("generate.urls", namespace="generate")),
-    path('stream/', views.stream, name='stream')
+    path('stream/', sse_app.views.stream, name='stream'),
+    path("news/", include("news.urls", namespace="news")),
 ]
 
-import debug_toolbar
-urlpatterns = [
-    path('__debug__/', include(debug_toolbar.urls)),
-] + urlpatterns
-
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
